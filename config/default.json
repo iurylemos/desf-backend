@@ -1,0 +1,9 @@
+{
+    "App": {
+        "resources": {
+            "Ibge": {
+                "apiUrl": "https://servicodados.ibge.gov.br/api/v1/localidades/municipios"
+            }
+        }
+    }
+}
