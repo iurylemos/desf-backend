@@ -12,5 +12,8 @@
     ],
     "migrations": [
         "src/migration/**/*.ts"
+    ],
+    "subscribers": [
+        "src/subscriber/**/*.ts"
     ]
 }

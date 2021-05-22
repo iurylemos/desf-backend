@@ -1,8 +1,10 @@
 import { SetupServer } from "./server";
+import { connectionDb } from './util/typeorm';
 
 (async (): Promise<void> => {
     try {
-        const server = new SetupServer(3000);
+        const server = new SetupServer(8000);
+        await connectionDb();
         await server.init();
         server.start();
 

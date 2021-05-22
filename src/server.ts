@@ -2,6 +2,7 @@ import './util/module-alias';
 import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
 import { MainController } from './controllers/main';
+import { UserController } from './controllers/user';
 import { Application } from 'express';
 import * as http from 'http';
 
@@ -23,7 +24,8 @@ export class SetupServer extends Server {
 
     private setupControllers(): void {
         const mainController = new MainController();
-        this.addControllers([mainController]);
+        const userController = new UserController();
+        this.addControllers([mainController, userController]);
     }
 
     public start(): void {
