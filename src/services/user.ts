@@ -1,10 +1,9 @@
 import { UserClient } from "@src/client/user";
 import { User } from "@src/entity/User";
 
-// export interface ResponseRequestCreated {
-//     resp: boolean
-// }
-
+export interface ResponseRequestUser {
+    user: User
+}
 export class UserService {
     constructor(protected user = new UserClient()) { }
 
@@ -42,9 +41,10 @@ export class UserService {
         }
     }
 
-    public async login(cpf: string, data_nascimento: string): Promise<void> {
+    public async login(cpf: string, data_nascimento: string): Promise<ResponseRequestUser> {
         try {
-            await this.user.login(cpf, data_nascimento);
+            const user = await this.user.login(cpf, data_nascimento);
+            return { user: user };
         } catch (error) {
             throw new Error(error.message);
         }

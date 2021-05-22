@@ -126,8 +126,8 @@ export class UserController {
 
             const userService = new UserService();
 
-            await userService.login(cpf, data_nascimento);
-            res.status(204).send();
+            const user = await userService.login(cpf, data_nascimento);
+            res.status(200).send(user);
             res.end();
         } catch (error) {
             console.log("ERROR", error)

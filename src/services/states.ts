@@ -9,7 +9,7 @@ export class StateService {
 
     public async getEstados(): Promise<ResponseRequestEstados> {
         try {
-            const estados = await this.ibge.getCountys();
+            const estados = await this.ibge.getStates();
             return { estados: estados.data }
         } catch (error) {
             throw new Error(error.message);
