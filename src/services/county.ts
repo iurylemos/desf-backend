@@ -24,4 +24,13 @@ export class CountyService {
             throw new Error(error.message);
         }
     }
+
+    public async getMunicipiosEstado(estado_id: string): Promise<ResponseRequestMunicipios> {
+        try {
+            const municipios = await this.ibge.getCountyForState(estado_id);
+            return { municipios: municipios.data }
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }

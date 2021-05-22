@@ -17,7 +17,7 @@ export class Ibge {
 
     public async getCounty(county: string): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}/${county}`);
+            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}/municipios/${county}`);
             return response;
         } catch (error) {
             if (error.response && error.response.status) {
@@ -32,7 +32,37 @@ export class Ibge {
 
     public async getCountys(): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}`);
+            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}/municipios?orderBy=nome`);
+            return response;
+        } catch (error) {
+            if (error.response && error.response.status) {
+                console.log("ERROR", error);
+                throw new ClientRequestError(error.message);
+            }
+
+            console.log("error2?", error.response.data);
+            throw new ClientRequestError(error.message);
+        }
+    }
+
+    public async getStates(): Promise<AxiosResponse> {
+        try {
+            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}/estados?orderBy=nome`);
+            return response;
+        } catch (error) {
+            if (error.response && error.response.status) {
+                console.log("ERROR", error);
+                throw new ClientRequestError(error.message);
+            }
+
+            console.log("error2?", error.response.data);
+            throw new ClientRequestError(error.message);
+        }
+    }
+
+    public async getCountyForState(id_state: string): Promise<AxiosResponse> {
+        try {
+            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}/estados/${id_state}/municipios?orderBy=nome`);
             return response;
         } catch (error) {
             if (error.response && error.response.status) {
