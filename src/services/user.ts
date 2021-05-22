@@ -6,14 +6,10 @@ import { User } from "@src/entity/User";
 // }
 
 export class UserService {
-    protected user = new UserClient();
+    constructor(protected user = new UserClient()) { }
 
     public async createUser(nome: string, cpf: string, data_nascimento: string, municipio: string): Promise<void> {
         try {
-            console.log('NOME', nome)
-            console.log('cpf', cpf)
-            console.log('data_nascimento', data_nascimento)
-            console.log('municipio', municipio)
             await this.user.createUser(nome, cpf, data_nascimento, municipio);
         } catch (error) {
             throw new Error(error.message);

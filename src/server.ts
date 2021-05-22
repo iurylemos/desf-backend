@@ -3,7 +3,7 @@ import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
 import { MainController } from './controllers/main';
 import { UserController } from './controllers/user';
-import { IbgeController } from './controllers/ibge';
+import { CountyController } from './controllers/county';
 import { Application } from 'express';
 import * as http from 'http';
 
@@ -26,8 +26,8 @@ export class SetupServer extends Server {
     private setupControllers(): void {
         const mainController = new MainController();
         const userController = new UserController();
-        const ibgeController = new IbgeController();
-        this.addControllers([mainController, userController, ibgeController]);
+        const countyController = new CountyController();
+        this.addControllers([mainController, userController, countyController]);
     }
 
     public start(): void {

@@ -1,6 +1,6 @@
 import { Ibge } from "@src/client/ibge";
 
-export interface ResponseRequestAllMunicipios {
+export interface ResponseRequestMunicipio {
     municipio: string;
 }
 
@@ -8,12 +8,11 @@ export interface ResponseRequestMunicipios {
     municipios: any[]
 }
 
-export class IbgeService {
-    protected ibge = new Ibge();
+export class CountyService {
+    constructor(protected ibge = new Ibge()) { }
 
-    public async getMunicipio(id_municipio: string): Promise<ResponseRequestAllMunicipios> {
+    public async getMunicipio(id_municipio: string): Promise<ResponseRequestMunicipio> {
         const municipio = await this.ibge.getCounty(id_municipio);
-        console.log('municipios', municipio);
         return { municipio: municipio.data };
     }
 

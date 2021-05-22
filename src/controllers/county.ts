@@ -1,14 +1,14 @@
 import { Controller, Get } from '@overnightjs/core';
-import { IbgeService } from '@src/services/ibge';
+import { CountyService } from '@src/services/county';
 import { Request, Response } from 'express';
 
-@Controller('ibge')
-export class IbgeController {
+@Controller('municipios')
+export class CountyController {
 
-    @Get('municipios/:id')
+    @Get(':id')
     public async getMunicipio(req: Request, res: Response): Promise<void> {
         try {
-            const ibgeService = new IbgeService();
+            const ibgeService = new CountyService();
             const { id } = req.params;
             const mandatoryFields = ['id'];
 
@@ -22,24 +22,20 @@ export class IbgeController {
             const municipios = await ibgeService.getMunicipio(id);
 
             res.status(200).send({ "municipio": municipios });
-            res.end();
         } catch (error) {
             res.status(500).send({ "Error": "Algo deu errado" })
-            res.end();
         }
     }
 
-    @Get('municipios')
+    @Get('')
     public async getMunicipios(_: Request, res: Response): Promise<void> {
         try {
-            const ibgeService = new IbgeService();
+            const ibgeService = new CountyService();
             const municipios = await ibgeService.getMunicipios();
 
             res.status(200).send(municipios);
-            res.end();
         } catch (error) {
-            res.status(500).send({ "Error": "Algo deu errado" })
-            res.end();
+            res.status(500).send({ "Error": "Algo deu errado" });
         }
     }
 }
