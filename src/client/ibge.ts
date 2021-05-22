@@ -17,11 +17,27 @@ export class Ibge {
 
     public async getCounty(county: string): Promise<AxiosResponse> {
         try {
-            const response = await axios.post(`${ibgeResourceConfig.get('apiUrl')}`, {});
-            return response.data;
+            const response = await axios.post(`${ibgeResourceConfig.get('apiUrl')}/${county}`, {});
+            return response;
         } catch (error) {
             if (error.response && error.response.status) {
                 console.log("ERROR", error);
+                throw new ClientRequestError(error.message);
+            }
+
+            console.log("error2?", error.response.data);
+            throw new ClientRequestError(error.message);
+        }
+    }
+
+    public async getCountys(): Promise<AxiosResponse> {
+        try {
+            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}`);
+            return response;
+        } catch (error) {
+            if (error.response && error.response.status) {
+                console.log("ERROR", error);
+                throw new ClientRequestError(error.message);
             }
 
             console.log("error2?", error.response.data);

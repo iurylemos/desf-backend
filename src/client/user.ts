@@ -35,6 +35,7 @@ export class UserClient {
         } catch (error) {
             if (error.response && error.response.status) {
                 console.log("ERROR", error);
+                throw new ClientRequestError(error.message, 400);
             }
 
             console.log("error2?", error.response);
