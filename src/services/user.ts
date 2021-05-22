@@ -1,23 +1,52 @@
-import { User, UserDataBase } from "@src/client/user";
+import { UserClient } from "@src/client/user";
+import { User } from "@src/entity/User";
 
-export interface ResponseRequestUsuario {
-    usuario: UserDataBase;
-}
+// export interface ResponseRequestCreated {
+//     resp: boolean
+// }
 
 export class UserService {
-    protected user = new User();
+    protected user = new UserClient();
 
-    public async createUser(nome: string, cpf: string, data_nascimento: string, municipio: string): Promise<ResponseRequestUsuario> {
-        const user = await this.user.createUser(nome, cpf, data_nascimento, municipio);
-        console.log('usuárioCriado', user);
-        return { usuario: user };
+    public async createUser(nome: string, cpf: string, data_nascimento: string, municipio: string): Promise<void> {
+        try {
+            await this.user.createUser(nome, cpf, data_nascimento, municipio);
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 
-    public async findUsers(): Promise<any> {
-
+    public async findUsers(): Promise<User[]> {
+        try {
+            const users = await this.user.findAll();
+            return users;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 
-    public async findUserById(id: string): Promise<any> {
+    public async findUserById(id: string): Promise<User> {
+        try {
+            const user = await this.user.getOneById(id);
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 
+    public async updateVacinacaoUser(id: string, status_vacinacao: boolean): Promise<void> {
+        try {
+            await this.user.updateUser(id, status_vacinacao);
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    public async login(cpf: string, data_nascimento: string): Promise<void> {
+        try {
+            await this.user.login(cpf, data_nascimento);
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 }

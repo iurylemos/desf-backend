@@ -1,11 +1,11 @@
-import { Controller, Get } from '@overnightjs/core';
+import { Controller, Get, Post } from '@overnightjs/core';
 import { UserService } from '@src/services/user';
 import { Request, Response } from 'express';
 
 @Controller('usuario')
 export class MainController {
 
-    @Get('')
+    @Post('')
     public async registerUser(req: Request, res: Response): Promise<void> {
         try {
             const { nome, cpf, dt_nascimento, municipio } = req.body;
@@ -19,9 +19,9 @@ export class MainController {
 
             const userService = new UserService();
 
-            const user = await userService.createUser(nome, cpf, dt_nascimento, municipio);
+            await userService.createUser(nome, cpf, dt_nascimento, municipio);
 
-            res.status(200).send({ "usuario": user });
+            res.status(204).send();
             res.end();
         } catch (error) {
             res.status(500).send({ "Error": "Algo deu errado" })
