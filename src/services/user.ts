@@ -1,4 +1,4 @@
-import { UserClient } from "@src/client/user";
+import { UserClient } from "@src/clients/user";
 import { User } from "@src/entity/User";
 
 export interface ResponseRequestUser {

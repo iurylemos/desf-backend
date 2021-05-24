@@ -1,4 +1,4 @@
-import { Ibge } from "@src/client/ibge";
+import { Ibge } from "@src/clients/ibge";
 
 export interface ResponseRequestEstados {
     estados: any[]
