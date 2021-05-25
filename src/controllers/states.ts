@@ -7,8 +7,8 @@ export class StateController {
     @Get('')
     public async getStates(_: Request, res: Response): Promise<void> {
         try {
-            const ibgeService = new StateService();
-            const municipios = await ibgeService.getEstados();
+            const stateService = new StateService();
+            const municipios = await stateService.getEstados();
 
             res.status(200).send(municipios);
         } catch (error) {

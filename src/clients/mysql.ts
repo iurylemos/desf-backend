@@ -19,7 +19,7 @@ export interface UserDataBase {
     vacinado: boolean
 }
 
-export class UserClient {
+export class MySqlClient {
     constructor(protected request = axios) { }
 
     public async createUser(nome: string, cpf: string, data_nascimento: string, municipio: string): Promise<void> {

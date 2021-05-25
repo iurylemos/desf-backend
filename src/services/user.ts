@@ -1,15 +1,16 @@
-import { UserClient } from "@src/clients/user";
+import { MySqlClient } from "@src/clients/mysql";
 import { User } from "@src/entity/User";
 
 export interface ResponseRequestUser {
     user: User
 }
+
 export class UserService {
-    constructor(protected user = new UserClient()) { }
+    constructor(protected db = new MySqlClient()) { }
 
     public async createUser(nome: string, cpf: string, data_nascimento: string, municipio: string): Promise<void> {
         try {
-            await this.user.createUser(nome, cpf, data_nascimento, municipio);
+            await this.db.createUser(nome, cpf, data_nascimento, municipio);
         } catch (error) {
             throw new Error(error.message);
         }
@@ -17,7 +18,7 @@ export class UserService {
 
     public async findUsers(): Promise<User[]> {
         try {
-            const users = await this.user.findAll();
+            const users = await this.db.findAll();
             return users;
         } catch (error) {
             throw new Error(error.message);
@@ -26,7 +27,7 @@ export class UserService {
 
     public async findUserById(id: string): Promise<User> {
         try {
-            const user = await this.user.getOneById(id);
+            const user = await this.db.getOneById(id);
             return user;
         } catch (error) {
             throw new Error(error.message);
@@ -35,7 +36,7 @@ export class UserService {
 
     public async updateVacinacaoUser(id: string, status_vacinacao: boolean): Promise<void> {
         try {
-            await this.user.updateUser(id, status_vacinacao);
+            await this.db.updateUser(id, status_vacinacao);
         } catch (error) {
             throw new Error(error.message);
         }
@@ -43,7 +44,7 @@ export class UserService {
 
     public async login(cpf: string, data_nascimento: string): Promise<ResponseRequestUser> {
         try {
-            const user = await this.user.login(cpf, data_nascimento);
+            const user = await this.db.login(cpf, data_nascimento);
             return { user: user };
         } catch (error) {
             throw new Error(error.message);

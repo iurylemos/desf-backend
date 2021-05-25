@@ -16,21 +16,6 @@ export class ClientRequestError extends InternalError {
 export class Ibge {
     constructor(protected request = axios) { }
 
-    public async getCounty(county: string): Promise<AxiosResponse> {
-        try {
-            const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}/municipios/${county}`);
-            return response;
-        } catch (error) {
-            if (error.response && error.response.status) {
-                console.log("ERROR", error);
-                throw new ClientRequestError(error.message);
-            }
-
-            console.log("error2?", error.response.data);
-            throw new ClientRequestError(error.message);
-        }
-    }
-
     public async getCountys(): Promise<AxiosResponse> {
         try {
             const response = await axios.get(`${ibgeResourceConfig.get('apiUrl')}/municipios?orderBy=nome`);
