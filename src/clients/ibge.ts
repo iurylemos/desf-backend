@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import config, { IConfig } from 'config';
 import { InternalError } from '@src/util/errors/internal-service';
-import * as HTTPUtil from '@src/util/request';
 
 const ibgeResourceConfig: IConfig = config.get('App.resources.Ibge');
 

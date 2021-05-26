@@ -1,10 +1,12 @@
 import { Controller, Get, Post } from '@overnightjs/core';
-import { UserService } from '@src/services/user';
+import { UserDB } from '@src/database/models/user.db';
 import { isValidCPF } from '@src/util/valid-cpf';
 import { Request, Response } from 'express';
 
 @Controller('usuario')
 export class UserController {
+
+    protected db = new UserDB();
 
     @Post('registrar')
     public async registerUser(req: Request, res: Response): Promise<void> {
@@ -24,20 +26,21 @@ export class UserController {
                 return;
             }
 
-            const userService = new UserService();
-
-            await userService.createUser(nome, cpf, dt_nascimento, municipio);
+            await this.db.createUser(nome, cpf, dt_nascimento, municipio);
 
             res.status(204).send();
             return;
         } catch (error) {
             const error_stack = error.stack ? error.stack : "";
+
             if (error_stack.includes('Duplicate')) {
                 res.status(400).send({ "Error": "CPF DUPLICADO" })
                 return;
             }
+
             res.status(500).send(error.stack)
             res.end();
+
             return;
         }
     }
@@ -45,8 +48,8 @@ export class UserController {
     @Get('todosUsuarios')
     public async getAllUsers(_: Request, res: Response): Promise<void> {
         try {
-            const userService = new UserService();
-            const users = await userService.findUsers();
+            const users = await this.db.findUsers();
+
             res.status(200).send({ usuarios: users });
             res.end();
         } catch (error) {
@@ -69,9 +72,7 @@ export class UserController {
                 }
             }
 
-            const userService = new UserService();
-
-            const user = await userService.findUserById(id);
+            const user = await this.db.getOneById(id);
             res.status(200).send({ usuario: user });
             res.end();
         } catch (error) {
@@ -94,9 +95,7 @@ export class UserController {
                 }
             }
 
-            const userService = new UserService();
-
-            await userService.updateVacinacaoUser(id, status_vacinacao);
+            await this.db.updateUser(id, status_vacinacao);
             res.status(204).send();
             res.end();
         } catch (error) {
@@ -124,9 +123,7 @@ export class UserController {
                 return;
             }
 
-            const userService = new UserService();
-
-            const user = await userService.login(cpf, data_nascimento);
+            const user = await this.db.login(cpf, data_nascimento);
             res.status(200).send(user);
             res.end();
         } catch (error) {

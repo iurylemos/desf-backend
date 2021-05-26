@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Connection, ConnectionOptions, createConnection } from "typeorm";
-import { User } from "../entity/User";
+import { User } from "./entities/User";
 
 const dbOptions: ConnectionOptions = {
     type: "mysql",
@@ -14,10 +14,10 @@ const dbOptions: ConnectionOptions = {
 }
 
 export class Database {
-    async connection(): Promise<Connection> {
+    public async connection(): Promise<Connection> {
         try {
             const conn = await createConnection(dbOptions);
-            console.log("Connected with database");
+            console.log("Connection established the database");
             return conn;
         } catch (error) {
             throw new Error(error);
