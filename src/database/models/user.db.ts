@@ -17,12 +17,18 @@ export class UserDB {
         }
     }
 
-    public async updateUser(id: string, status_vacinacao: boolean): Promise<void> {
+    public async updateUser(cpf: string, status_vacinacao: boolean): Promise<void> {
         try {
             const userRepository = getRepository(User);
-            const user = await userRepository.findOneOrFail(id);
+            const user = await userRepository.findOne({
+                cpf: cpf
+            });
+            if (!user) {
+                throw new Error("Usuário não encontrado");
+            }
+
             user.vacinado = status_vacinacao;
-            await userRepository.save(user);
+            await userRepository.update(user.id, user);
         } catch (error) {
             throw new Error(error);
         }

@@ -82,11 +82,11 @@ export class UserController {
         }
     }
 
-    @Post('updateVacinacao')
-    public async updateVacinacao(req: Request, res: Response): Promise<void> {
+    @Post('vacinar')
+    public async vacinar(req: Request, res: Response): Promise<void> {
         try {
-            const { id, status_vacinacao } = req.body;
-            const mandatoryFields = ['id', 'status_vacionacao'];
+            const { cpf, status_vacina } = req.body;
+            const mandatoryFields = ['cpf', 'status_vacina'];
 
             for (const field of mandatoryFields) {
                 if (!req.body[field]) {
@@ -95,7 +95,7 @@ export class UserController {
                 }
             }
 
-            await this.db.updateUser(id, status_vacinacao);
+            await this.db.updateUser(cpf, status_vacina);
             res.status(204).send();
             res.end();
         } catch (error) {
